@@ -1,9 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    Page d'accueil
-{% endblock %}
+{% block title %}Wild Agency{% endblock %}
 
 {% block body %}
-    COUCOU
+    <main class="container">
+        <h1 class="detail-title">Wild Agency</h1>
+        <h2> Nos biens 4 pièces</h2>
+        <div class="row">
+            {% for property in properties %}
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ property.principalImage }}" height="200" class="card-img-top" alt="photo-maison">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ property.title }}</h5>
+                        <p class="card-text">Prix : {{ property.price }}€</p>
+                        <a href="{{ path('property_show', {'id': property.id}) }}" class="btn btn-danger">Détails</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="white-div"></div>
+    </main>
 {% endblock %}
