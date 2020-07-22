@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Image;
 use App\Entity\Property;
+use App\Entity\PropertyFilter;
+use App\Form\SearchDataType;
 use App\Form\PropertyType;
 use App\Repository\ImageRepository;
+use App\Repository\PropertyFilterRepository;
 use App\Repository\PropertyRepository;
 use App\Repository\PropertyTypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +26,7 @@ class PropertyController extends AbstractController
      */
     public function index(PropertyRepository $propertyRepository): Response
     {
+
         return $this->render('property/index.html.twig', [
             'properties' => $propertyRepository->findAll(),
         ]);

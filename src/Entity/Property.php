@@ -59,10 +59,6 @@ class Property
      */
     private $message;
 
-    /**
-     * @ORM\OneToMany(targetEntity=PropertyType::class, mappedBy="property")
-     */
-    private $property_type;
 
     /**
      * @ORM\OneToMany(targetEntity=Services::class, mappedBy="property")
@@ -74,12 +70,17 @@ class Property
      */
     private $principal_image;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=PropertyType::class, inversedBy="properties")
+     */
+    private $type;
+
     public function __construct()
     {
         $this->image = new ArrayCollection();
         $this->message = new ArrayCollection();
-        $this->property_type = new ArrayCollection();
         $this->service = new ArrayCollection();
+        $this->type = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -286,6 +287,32 @@ class Property
     public function setPrincipalImage(string $principal_image): self
     {
         $this->principal_image = $principal_image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PropertyType[]
+     */
+    public function getType(): Collection
+    {
+        return $this->type;
+    }
+
+    public function addType(PropertyType $type): self
+    {
+        if (!$this->type->contains($type)) {
+            $this->type[] = $type;
+        }
+
+        return $this;
+    }
+
+    public function removeType(PropertyType $type): self
+    {
+        if ($this->type->contains($type)) {
+            $this->type->removeElement($type);
+        }
 
         return $this;
     }

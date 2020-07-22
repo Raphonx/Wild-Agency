@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Property;
+use App\Services\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,6 +20,31 @@ class PropertyRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Property::class);
     }
+
+    public function findLatest(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findSearch(SearchData $searchData): array
+    {
+        $query = $this
+            ->createQueryBuilder('p')
+            ->select( 'p');
+
+        if (!empty($searchData->q)){
+            $query = $query
+                ->andWhere('p.title LIKE :q')
+                ->setParameter('q', "%{$searchData->q}%");
+
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
 
     // /**
     //  * @return Property[] Returns an array of Property objects

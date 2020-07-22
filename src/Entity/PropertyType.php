@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PropertyTypeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,9 +25,14 @@ class PropertyType
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Property::class, inversedBy="property_type")
+     * @ORM\ManyToMany(targetEntity=Property::class, mappedBy="type")
      */
-    private $property;
+    private $properties;
+
+    public function __construct()
+    {
+        $this->properties = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -44,15 +51,36 @@ class PropertyType
         return $this;
     }
 
-    public function getProperty(): ?Property
+    /**
+     * @return Collection|Property[]
+     */
+    public function getProperties(): Collection
     {
-        return $this->property;
+        return $this->properties;
     }
 
-    public function setProperty(?Property $property): self
+    public function addProperty(Property $property): self
     {
-        $this->property = $property;
+        if (!$this->properties->contains($property)) {
+            $this->properties[] = $property;
+            $property->addType($this);
+        }
 
         return $this;
+    }
+
+    public function removeProperty(Property $property): self
+    {
+        if ($this->properties->contains($property)) {
+            $this->properties->removeElement($property);
+            $property->removeType($this);
+        }
+
+        return $this;
+    }
+
+    function __toString()
+    {
+        return $this->name;
     }
 }

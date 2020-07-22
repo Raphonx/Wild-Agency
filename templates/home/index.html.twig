@@ -3,9 +3,34 @@
 {% block title %}Wild Agency{% endblock %}
 
 {% block body %}
-    <main class="container">
+    <main class="container" xmlns="http://www.w3.org/1999/html">
         <h1 class="detail-title">Wild Agency</h1>
-        <h2> Nos biens 4 pièces</h2>
+            <h2 class="search-title">Rechercher un bien</h2>
+            <div class="container">
+                {{ form_start(form) }}
+                <div class="col-md-6">
+                    {{ form_row(form.q) }}
+                </div>
+                <button type="submit" class="btn btn-danger search-btn">Rechercher</button>
+                {{ form_end(form) }}
+        </div>
+        <div class="row">
+            {% if search is not empty %}
+            {% for property in search %}
+            <div class="card" style="width: 18rem;">
+                <img src="{{ property.principalImage }}" height="200" class="card-img-top" alt="photo-maison">
+                <div class="card-body">
+                    <h5 class="card-title">{{ property.title }}</h5>
+                    <p class="card-text">Prix : {{ property.price }}€</p>
+                    <a href="{{ path('property_show', {'id': property.id}) }}" class="btn btn-danger">Détails</a>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+                <p>Aucune recherche pour le moment</p>
+            {% endif %}
+        </div>
+        <h2 class="new-title"> Les nouveautés</h2>
         <div class="row">
             {% for property in properties %}
                 <div class="card" style="width: 18rem;">
