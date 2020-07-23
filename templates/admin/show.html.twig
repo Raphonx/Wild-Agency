@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ property.title }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1 class="detail-title">{{ property.title }}</h1>
+        <div class="property-pictures">
+    {% for photo in property.image %}
+        <a href="{{ photo.url }}">
+    <img src="{{ photo.url }}" width ="300px" height="350px" alt="photo-bien">
+        </a>
+    {% endfor %}
+        </div>
+        <div class="separation"></div>
+
+        <div class="container-infos">
+            <div>
+                {% for type in property.type %}
+                Type de bien : {{ type.name }}
+            {% endfor %}
+            </div>
+            <div>
+                Ville : {{ property.city }}
+            </div>
+
+    <div> Surface : {{ property.area }}m² </div>
+    <div> Prix : {{ property.price }}€ </div>
+    <div> Nombre de pièces : {{ property.nbRoom }}</div>
+        </div>
+        <div class="separation"></div>
+        <div class="description-container">
+        <h2 class="description"> Description du bien</h2>
+        <div class="text-description">{{ property.description }}</div>
+
+
+    </div>
+    <div class="separation"></div>
+    <div class="service-container">
+        <h2 class="service"> Les plus</h2>
+        <div class="details-service">
+        {% for service in property.service %}
+            <div class="service-name">{{ service.name }}</div>
+        {% endfor %}
+        </div>
+    </div>
+        <div class="button-contact-container">
+        <button type="button" class="btn btn-outline-danger">Nous contacter</button>
+        </div>
+    <div class="white-div"></div>
+    </div>
+{% endblock %}

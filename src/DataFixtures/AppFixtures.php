@@ -75,8 +75,10 @@ class AppFixtures extends Fixture
         ],
     ];
 
+
     public function load(ObjectManager $manager)
     {
+
         foreach (self::PROPERTY as $title => $data) {
             $property = new Property();
             $property->setTitle($title);

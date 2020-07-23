@@ -61,26 +61,25 @@ class Property
 
 
     /**
-     * @ORM\OneToMany(targetEntity=Services::class, mappedBy="property")
-     */
-    private $service;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $principal_image;
 
     /**
-     * @ORM\ManyToMany(targetEntity=PropertyType::class, inversedBy="properties")
+     * @ORM\ManyToOne(targetEntity=PropertyType::class, inversedBy="properties")
      */
     private $type;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Service::class, inversedBy="properties")
+     */
+    private $services;
 
     public function __construct()
     {
         $this->image = new ArrayCollection();
         $this->message = new ArrayCollection();
-        $this->service = new ArrayCollection();
-        $this->type = new ArrayCollection();
+        $this->services = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -218,61 +217,30 @@ class Property
     }
 
     /**
-     * @return Collection|PropertyType[]
-     */
-    public function getPropertyType(): Collection
-    {
-        return $this->property_type;
-    }
-
-    public function addPropertyType(PropertyType $propertyType): self
-    {
-        if (!$this->property_type->contains($propertyType)) {
-            $this->property_type[] = $propertyType;
-            $propertyType->setProperty($this);
-        }
-
-        return $this;
-    }
-
-    public function removePropertyType(PropertyType $propertyType): self
-    {
-        if ($this->property_type->contains($propertyType)) {
-            $this->property_type->removeElement($propertyType);
-            // set the owning side to null (unless already changed)
-            if ($propertyType->getProperty() === $this) {
-                $propertyType->setProperty(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Services[]
      */
     public function getService(): Collection
     {
-        return $this->service;
+        return $this->services;
     }
 
-    public function addService(Services $service): self
+    public function addService(Services $services): self
     {
-        if (!$this->service->contains($service)) {
-            $this->service[] = $service;
-            $service->setProperty($this);
+        if (!$this->services->contains($services)) {
+            $this->services[] = $services;
+            $services->setProperty($this);
         }
 
         return $this;
     }
 
-    public function removeService(Services $service): self
+    public function removeService(Services $services): self
     {
-        if ($this->service->contains($service)) {
-            $this->service->removeElement($service);
+        if ($this->services->contains($services)) {
+            $this->services->removeElement($services);
             // set the owning side to null (unless already changed)
-            if ($service->getProperty() === $this) {
-                $service->setProperty(null);
+            if ($services->getProperty() === $this) {
+                $services->setProperty(null);
             }
         }
 
@@ -291,29 +259,23 @@ class Property
         return $this;
     }
 
-    /**
-     * @return Collection|PropertyType[]
-     */
-    public function getType(): Collection
+    public function getType(): ?PropertyType
     {
         return $this->type;
     }
 
-    public function addType(PropertyType $type): self
+    public function setType(?PropertyType $type): self
     {
-        if (!$this->type->contains($type)) {
-            $this->type[] = $type;
-        }
+        $this->type = $type;
 
         return $this;
     }
 
-    public function removeType(PropertyType $type): self
+    /**
+     * @return Collection|Service[]
+     */
+    public function getServices(): Collection
     {
-        if ($this->type->contains($type)) {
-            $this->type->removeElement($type);
-        }
-
-        return $this;
+        return $this->services;
     }
 }

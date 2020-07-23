@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau bien{% endblock %}
+
+{% block body %}
+    <main class="container">
+    <h1>Crée un nouveau bien</h1>
+
+    {{ include('admin/_form.html.twig') }}
+
+    <a class="text-danger" href="{{ path('admin_index') }}">Revenir à l'accueil</a>
+    </main>
+{% endblock %}

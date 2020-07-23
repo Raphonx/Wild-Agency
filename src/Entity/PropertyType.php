@@ -25,7 +25,7 @@ class PropertyType
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Property::class, mappedBy="type")
+     * @ORM\OneToMany(targetEntity=Property::class, mappedBy="type")
      */
     private $properties;
 
@@ -47,34 +47,6 @@ class PropertyType
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Property[]
-     */
-    public function getProperties(): Collection
-    {
-        return $this->properties;
-    }
-
-    public function addProperty(Property $property): self
-    {
-        if (!$this->properties->contains($property)) {
-            $this->properties[] = $property;
-            $property->addType($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProperty(Property $property): self
-    {
-        if ($this->properties->contains($property)) {
-            $this->properties->removeElement($property);
-            $property->removeType($this);
-        }
 
         return $this;
     }

@@ -10,6 +10,9 @@
             <a class="nav-item nav-link font-weight-bold text-body" href="/">Accueil</a>
             <a class="nav-item nav-link font-weight-bold text-body" href="{{ path('property_index') }}">Nos biens</a>
             <a class="nav-item nav-link font-weight-bold text-body" href="#">Contact</a>
+            {% if app.user %}
+            <a class="nav-item nav-link font-weight-bold text-body" href="{{ path('app_logout') }}"> Se déconnecter</a>
+            {% endif %}
         </div>
     </div>
 </nav>

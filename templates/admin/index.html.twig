@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Interface admin {% endblock %}
+
+{% block body %}
+{% if app.user %}
+    <h1 class="admin-index-title"> Bienvenu {{ app.user.firstname }} dans l'espace Administrateur</h1>
+{% endif %}
+    <h2 class="detail-title"> Tous les biens</h2>
+    <main class="container">
+    <div class="row">
+        {% for property in properties %}
+            <div class="card" style="width: 18rem;">
+                <img src="{{ property.principalImage }}" height="200" class="card-img-top" alt="photo-maison">
+                <div class="card-body">
+                    <h5 class="card-title">{{ property.title }}</h5>
+                    <p class="card-text">Prix : {{ property.price }}€</p>
+                    <a href="{{ path('property_show', {'id': property.id}) }}" class="btn btn-danger">Détails</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </main>
+{% endblock %}
