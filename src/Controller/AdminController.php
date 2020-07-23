@@ -76,7 +76,7 @@ class AdminController extends AbstractController
             $entityManager->persist($message);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_index');
+            return $this->redirectToRoute('property_index');
         }
 
         return $this->render('admin/contact.html.twig', [

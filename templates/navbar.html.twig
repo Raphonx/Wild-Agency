@@ -9,9 +9,10 @@
         <div class="navbar-nav">
             <a class="nav-item nav-link font-weight-bold text-body" href="/">Accueil</a>
             <a class="nav-item nav-link font-weight-bold text-body" href="{{ path('property_index') }}">Nos biens</a>
-            <a class="nav-item nav-link font-weight-bold text-body" href="#">Contact</a>
+            <a class="nav-item nav-link font-weight-bold text-body" href="{{ path('admin_contact') }}">Contact</a>
             {% if app.user %}
-            <a class="nav-item nav-link font-weight-bold text-body" href="{{ path('app_logout') }}"> Se déconnecter</a>
+                <a class="nav-item nav-link font-weight-bold text-body" href="{{ path('admin_message') }}"> Mes messages</a>
+                <a class="nav-item nav-link font-weight-bold text-body" href="{{ path('app_logout') }}"> Se déconnecter</a>
             {% endif %}
         </div>
     </div>
