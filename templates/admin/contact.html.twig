@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Envoyer un message{% endblock %}
+
+{% block body %}
+    <main class="container">
+        <h1>Votre message</h1>
+
+        {{ include('admin/_form.html.twig', {'button_label': 'Envoyer'}) }}
+
+        <a href="{{ path('admin_index') }}">Retour à l'accueil</a>
+        <div class="white-div"></div>
+    </main>
+{% endblock %}

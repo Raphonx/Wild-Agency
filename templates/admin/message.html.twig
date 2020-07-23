@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes messages{% endblock %}
+
+{% block body %}
+    {% for message in messages %}
+        <main class="container ">
+    <div class="card text-center">
+        <div class="card-header bg-danger">
+            De la part de : {{ message.name }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Contact: {{ message.contactInformation }}</h5>
+            <p class="card-text">Message: {{ message.message }}</p>
+            {% for bien in message.properties %}
+            <p> Bien sélectionnés : {{ bien.title}}</p>
+                {% endfor %}
+        </div>
+    </div>
+        </main>
+    {% endfor %}
+{% endblock %}

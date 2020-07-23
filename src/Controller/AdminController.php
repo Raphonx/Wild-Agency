@@ -2,27 +2,29 @@
 
 namespace App\Controller;
 
-use App\Entity\Image;
+use App\Entity\Message;
 use App\Entity\Property;
 use App\Entity\PropertyFilter;
-use App\Entity\Service;
+use App\Form\MessageType;
 use App\Form\SearchDataType;
 use App\Form\PropertyType;
-use App\Repository\ImageRepository;
+use App\Form\ImageType;
+use App\Repository\MessageRepository;
 use App\Repository\PropertyFilterRepository;
 use App\Repository\PropertyRepository;
-use App\Repository\PropertyTypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\FormTypeInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 
 
 
 /**
  * @Route("/admin")
+ * @IsGranted("ROLE_ADMIN")
  */
 class AdminController extends AbstractController
 {
@@ -61,12 +63,35 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin_show", methods={"GET"})
+     * @Route("/contact", name="admin_contact", methods={"GET","POST"})
      */
-    public function show(Property $property): Response
+    public function contact(Request $request): Response
     {
-        return $this->render('admin/show.html.twig', [
-            'property' => $property,
+        $message = new Message();
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($message);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin_index');
+        }
+
+        return $this->render('admin/contact.html.twig', [
+            'message' => $message,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/message", name="admin_message", methods={"GET"})
+     */
+    public function message(MessageRepository $message): Response
+    {
+        return $this->render('admin/message.html.twig', [
+            'messages' => $message->findAll(),
         ]);
     }
 

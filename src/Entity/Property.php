@@ -204,7 +204,7 @@ class Property
             $this->message[] = $message;
         }
 
-        return $this;
+    return $this;
     }
 
     public function removeMessage(Message $message): self
@@ -277,5 +277,10 @@ class Property
     public function getServices(): Collection
     {
         return $this->services;
+    }
+
+    function __toString()
+    {
+        return $this->title;
     }
 }

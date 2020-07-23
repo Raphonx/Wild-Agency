@@ -7,7 +7,11 @@
     <h1 class="admin-index-title"> Bienvenu {{ app.user.firstname }} dans l'espace Administrateur</h1>
 {% endif %}
     <h2 class="detail-title"> Tous les biens</h2>
+
     <main class="container">
+        <a href="{{ path('admin_new') }}">
+            <button id="create-btn" class="btn btn-danger">Créer un bien</button>
+        </a>
     <div class="row">
         {% for property in properties %}
             <div class="card" style="width: 18rem;">
@@ -15,7 +19,9 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ property.title }}</h5>
                     <p class="card-text">Prix : {{ property.price }}€</p>
-                    <a href="{{ path('property_show', {'id': property.id}) }}" class="btn btn-danger">Détails</a>
+                    <a href="{{ path('property_show', {'id': property.id}) }}" class="btn btn-danger">Voir</a>
+                    <a href="{{ path('admin_edit', {'id': property.id}) }}" class="btn btn-danger">Modifier</a>
+                    <a href="{{ path('admin_index') }}"> {{ include('admin/_delete_form.html.twig') }}</a>
                 </div>
             </div>
         {% endfor %}

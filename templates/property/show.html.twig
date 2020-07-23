@@ -16,9 +16,7 @@
 
         <div class="container-infos">
             <div>
-                {% for type in property.type %}
-                Type de bien : {{ type.name }}
-            {% endfor %}
+                Type de bien : {{ property.type }}
             </div>
             <div>
                 Ville : {{ property.city }}
@@ -45,7 +43,9 @@
         </div>
     </div>
         <div class="button-contact-container">
+            <a href="{{ path('admin_contact') }}">
         <button type="button" class="btn btn-outline-danger">Nous contacter</button>
+            </a>
         </div>
     <div class="white-div"></div>
     </div>
